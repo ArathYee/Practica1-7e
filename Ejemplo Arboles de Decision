@@ -1,0 +1,28 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import weka.classifiers.trees.J48;
+import weka.core.Instances;
+
+//ejemplo de cómo implementar el algoritmo de clasificación con árboles de decisión en Java
+public class DecisionTreeExample {
+    public static void main(String[] args) throws Exception {
+        // Cargar los datos de entrada
+        BufferedReader reader = new BufferedReader(new FileReader("iris.arff"));
+        Instances data = new Instances(reader);
+        reader.close();
+        
+        // Establecer la variable de clase
+        data.setClassIndex(data.numAttributes() - 1);
+        
+        // Crear y configurar el modelo del árbol de decisión
+        J48 tree = new J48();
+        tree.setUnpruned(true);
+        tree.setConfidenceFactor((float) 0.25);
+        
+        // Entrenar el modelo del árbol de decisión
+        tree.buildClassifier(data);
+        
+        // Imprimir la estructura del árbol de decisión
+        System.out.println(tree.toString());
+    }
+}
